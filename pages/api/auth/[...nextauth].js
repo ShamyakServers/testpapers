@@ -63,7 +63,7 @@ export const authOptions = {
   callbacks: {
     async jwt({token, user, account, profile, isNewUser}){
       // console.log(token)
-      console.log("latest", token, user, account, profile, isNewUser)
+      // console.log("latest", token, user, account, profile, isNewUser)
       return token
     },
     async signIn({ user, account, profile, email, credentials }){

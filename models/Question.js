@@ -5,9 +5,9 @@ const QuestionSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    answer: {type: String, required:false},
+    solution: {type: String, required:false},
     mcq:{type:Boolean,  required:false},
-    mcqAnswer: {type:String, required:false},
+    mcqAnswer: {type:String, required:false},   
     options: {}
 }, {timestamps: true})
 

@@ -3,12 +3,12 @@
 import Link from 'next/link';
 import Head from 'next/head';
 
-export default function Exams() {
+export default function Mock() {
   return (
     <div className="bg-gray-100 min-h-screen">
 
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-semibold text-gray-800 mb-4">Available Exams</h1>
+        <h1 className="text-3xl font-semibold text-gray-800 mb-4">Available Mock Papers for exams</h1>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <ExamCard
             name="REET"
@@ -40,7 +40,7 @@ const ExamCard = ({ name, description, syllabus }) => (
       <p className="text-gray-600 mb-4">{description}</p>
     </div>
     <div className="bg-blue-500 text-white text-center py-3">
-      <Link href={"/exam/" + name} legacyBehavior>
+      <Link href={"/mocks/list?ex=" + name} legacyBehavior>
         <a className="font-semibold hover:underline">Read More</a>
       </Link>
     </div>

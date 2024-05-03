@@ -50,7 +50,7 @@ const addquestion = () => {
         progress: undefined,
         });
     }
-    setCreds({Id:"", Question:"", Mcq:"",Answer:""})
+    // setCreds({Id:"", Question:"", Mcq:"",Answer:""})
   }
   return (
     <>

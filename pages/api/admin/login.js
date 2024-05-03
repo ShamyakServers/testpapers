@@ -3,7 +3,6 @@
 import jwt from "jsonwebtoken"
 import connectDb from "@/middleware/mongoose";
 const handler =  async (req, res)=>{
-    console.log("winiwjeijwieji")
     if(req.method == "POST"){
         const {username, password} = req.body
         if(username=='AdminBangExams' && password=='windows2024@'){
