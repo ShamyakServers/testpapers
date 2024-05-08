@@ -25,7 +25,7 @@ function signin({ providers }) {
     <>
       <Head>
       </Head>
-      <div className="min-h-[80vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <ToastContainer
           position={process.env.NEXT_PUBLIC_TOAST_TYPE}
           autoClose={1000}
@@ -153,7 +153,6 @@ export default signin;
 export async function getServerSideProps(context) {
   const { req } = context;
   const session = await getSession({ req });
-  console.log(session, "session")
   if (session) {
     return {
       redirect: { destination: "/" },

@@ -67,7 +67,7 @@ export const authOptions = {
       return token
     },
     async signIn({ user, account, profile, email, credentials }){
-      if(!user.success){
+      if(!user.success && !user.image){
         throw new Error(user.error)
       }
       else{

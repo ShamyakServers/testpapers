@@ -3,39 +3,27 @@ import { useRouter } from 'next/router'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link"
-const Profile = () => {
+import { getSession } from 'next-auth/react';
+const Profile = ({sess}) => {
+  console.log(sess)
   const [creds, setCreds] = useState({name:'', email:'', phone:' ', address:' ', pincode:' '})
   const [pass, setPass] = useState('')
   const router = useRouter()
   useEffect(() => {
-    if(!localStorage.getItem('user')){
-      router.push('/')
+    if(!sess){
+      // router.push('/')
     }
     const res = fetch(`/api/getuser`, {
       method:"POST",
       headers:{
         'Content-type': 'application/json'
       },
-      body:JSON.stringify({token:JSON.parse(localStorage.getItem("user")).authtoken})
+      body:JSON.stringify({email:sess.user.email})
     })
-    if(!localStorage.getItem('user')){
-      router.push("/")
-    }
     res.then(response =>{
       response.json().then(json =>{
         setCreds({name:json.user.name, email:json.user.email,  address: json.user.address, phone: json.user.phone, pincode: json.user.pincode})
         setPass(json.pass)
-        toast.dismiss();
-        toast.success('Yay! Your profile is loaded!', {
-          position: process.env.NEXT_PUBLIC_TOAST_TYPE,
-          autoClose: 1000,
-          className: 'text-lg',
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          });
       })
     })
   }, [])
@@ -48,11 +36,10 @@ const Profile = () => {
       headers:{
         'Content-Type': "application/json"
       },
-      body: JSON.stringify({creds, token: JSON.parse(localStorage.getItem('user')).authtoken})
+      body: JSON.stringify({creds, email: sess.user.email})
     })
     let a = await res.json()
     if(a.success){
-      toast.dismiss();
       toast.success(a.msg, {
         position: process.env.NEXT_PUBLIC_TOAST_TYPE,
         autoClose: 1000,
@@ -65,7 +52,6 @@ const Profile = () => {
         });
     }
     else{
-      toast.dismiss();
       toast.error(a.error, {
         position: process.env.NEXT_PUBLIC_TOAST_TYPE,
         autoClose: 1000,
@@ -80,7 +66,7 @@ const Profile = () => {
   }
   
   return (
-    <div className='dark:bg-gray-800 dark:text-white'>
+    <div className='dark:bg-gray-800 dark:text-white min-h-screen'>
        <ToastContainer
           position={process.env.NEXT_PUBLIC_TOAST_TYPE}
           autoClose={1000}
@@ -145,7 +131,17 @@ const Profile = () => {
      </div>
   )
 }
-
+export async function getServerSideProps(context) {
+  const { req } = context;
+  const session = await getSession({ req });
+  console.log(session, "SERVERSIDE")
+  return {
+    props: {
+      sess:session,
+      // csrfToken: await csrfToken(context),
+    },
+  };
+}
 
 
 export default Profile

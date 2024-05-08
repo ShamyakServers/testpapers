@@ -4,13 +4,12 @@ import connectDb from "../../middleware/mongoose"
 import jwt from "jsonwebtoken"
 const handler =  async (req, res)=>{
         if(req.method == "POST"){
-            let id = jwt.verify(req.body.token, process.env.JWT_KEY)
-            let user = await User.findById(id.id)
+            let user = await User.findOne({email:req.body.email})
             if(!user){
                 return res.status(406).json({success:false,error: "User not exists"})
             }
             else{
-                user = await User.findByIdAndUpdate(id.id, req.body.creds)
+                user = await User.findOneAndUpdate({email:req.body.email}, req.body.creds)
                 return res.status(200).json({success:true,msg: "Details changed"})
             }
         }
