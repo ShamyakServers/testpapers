@@ -3,7 +3,6 @@ import {AiFillLock} from 'react-icons/ai'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from 'next/link'
-import { signIn, getProviders, getSession, signOut } from "next-auth/react";
 import {useRouter} from "next/router"
 const Signup = () => {
   const router = useRouter()
@@ -117,20 +116,3 @@ const Signup = () => {
 }
 
 export default Signup
-
-export async function getServerSideProps(context) {
-  const { req } = context;
-  const session = await getSession({ req });
-  if (session) {
-    return {
-      redirect: { destination: "/" },
-    };
-  }
-
-  return {
-    props: {
-      providers: await getProviders(),
-      // csrfToken: await csrfToken(context),
-    },
-  };
-}
