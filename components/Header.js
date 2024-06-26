@@ -3,8 +3,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { MdAccountCircle} from "react-icons/md";
-import { useSession , signOut} from "next-auth/react";
+// import { MdAccountCircle} from "react-icons/md";
+import { useSession , signOut, getSession} from "next-auth/react";
 function Header() {
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -34,35 +34,37 @@ function Header() {
   });
 
 
-  const { data: session, status } = useSession()
+  const { status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      console.log("not authenticated")
+    },
+  })
   const router = useRouter()
   const [showProfile, setshowProfile] = React.useState(false);
   function user(){
+    // console.log(s)
     if(status == 'authenticated'){
       return true
+    }
+    else if(status == 'loading'){
+      return false;
     }
     else{ 
       return false
     }
   }
   function logout(){
-    signOut()
-    toast.success("Successfully Logged out!")
+    signOut({
+      redirect:false
+    })
+      toast.success("Successfully Logged out!")
+
   }
 
   return (
     <header className="absolute w-full z-30">
-      <ToastContainer
-          position="top-center"
-          autoClose={1000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover={false}
-        />
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
 
@@ -76,8 +78,9 @@ function Header() {
             </Link>
           </div>
           <a>
-            {console.log(showProfile, user())}
-      {showProfile && user() && <div className='z-20 absolute right-[70rem] rounded-md px-5 w-32 bg-white dark:bg-gray-800 dark:text-white shadow-lg border py-4 top-12' onMouseOver={() => { setshowProfile(true) }} onMouseLeave={() => { setshowProfile(false) }}>
+            {/* {console.log(showProfile, user())} */}
+            
+      {showProfile && user() && <div className='z-20 absolute right-[70rem] rounded-md px-5 w-32 bg-white text-black  shadow-lg border py-4 top-12' onMouseOver={() => { setshowProfile(true) }} onMouseLeave={() => { setshowProfile(false) }}>
           <ul>
             <Link href={'/quizdone'}><li className="py-1 hover:text-gray-700 cursor-pointer text-sm ">Quizzes done</li></Link>
             <li onClick={logout} className="py-1 hover:text-gray-700 cursor-pointer text-sm ">Logout</li>
@@ -90,23 +93,30 @@ function Header() {
           {/* Desktop navigation */}
           <ul className="flex grow justify-end ">
               <li>
-                <Link href="/login" className="font-medium text--600 hover:text-gray-200 ease-in-out px-6">Mocks</Link>
+                <Link href="/mock" className="font-medium text--600 hover:text-gray-200 ease-in-out px-6">Mocks</Link>
               </li>
               <li>
-                <Link href="/login" className="font-medium text-purple-600 hover:text-gray-200 ease-in-out px-6">Quizzes</Link>
+                <Link href="/quizzes" className="font-medium text-purple-600 hover:text-gray-200 ease-in-out px-6">Quizzes</Link>
               </li>
             </ul>
           <nav className="hidden md:flex md:grow">
 
             {/* Desktop sign in links */}
-            <ul className="flex grow justify-end flex-wrap items-center">
+            
+            {user() ?             <ul className="flex grow justify-end flex-wrap items-center">
+              <img src="/images/profile.png" className="rounded-3xl h-[3rem] w-[3rem] mx-6 my-1" alt="Profile" />
+              <li>
+                <span onClick={logout} className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out cursor-pointer">Logout</span>
+                
+              </li>
+            </ul> :<ul className="flex grow justify-end flex-wrap items-center">
               <li>
                 <Link href="/login" className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out">Sign in</Link>
               </li>
               <li>
                 <Link href="/signup" className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">Sign up</Link>
               </li>
-            </ul>
+            </ul>}
 
 
           </nav>

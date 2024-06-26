@@ -14,11 +14,13 @@ key.py
 # next.js
 /.next/
 /out/
-
+c.cpp
 # production
 /build
 
 # misc
+l.py
+c.py
 .DS_Store
 *.pem
 

@@ -3,8 +3,8 @@ import Head from 'next/head';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from 'react';
-import MockPaper from '@/models/MockPaper';
-import Question from '@/models/Question';
+import MockPaper from '/models/MockPaper';
+import Question from '/models/Question';
 import mongoose from 'mongoose';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
@@ -100,7 +100,7 @@ const slug =  ({ title, desc, price, time, questions, id , sess}) => {
   }, []);
 
   return (
-    <>   
+    <div className='min-h-screen sm:px-6 lg:px-10 py-[7rem]'>   
             <ToastContainer
           position='top-right'
           autoClose={1000}
@@ -112,17 +112,17 @@ const slug =  ({ title, desc, price, time, questions, id , sess}) => {
           draggable={false}
           pauseOnHover={false}
         />
-    <h1 className='bg-gray-100 font-semibold text-3xl text-center pt-10  '> Preview of the Mock Paper - {title}.</h1>
-     <div className="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+    <h1 className='font-semibold text-3xl text-center pt-10  '> Preview of the Mock Paper - {title}.</h1>
+     <div className="min-h-screen  p-6">
       <Head>
         <title>Mock Paper Preview - {title}</title>
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"/>
         <Script type='application/javascript' crossOrigin='anonymous' src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_PAYTM_MID}`} onLoad={onScriptLoad()} ></Script>
       </Head>
       
-      <div className="bg-white shadow-lg rounded-lg p-8 max-w-4xl w-full">
+      <div className="shadow-lg rounded-lg p-8 max-w-4xl w-full">
         <h1 className="text-3xl font-bold mb-4">{title}</h1>
-        <p className="text-gray-700 mb-8">{desc}</p>
+        <p className="text-gray-300 mb-8">{desc}</p>
         <ul className=" pl-5 mb-8">
           {questions.map((question, index) => {
             if(index >= 5){return }
@@ -140,6 +140,7 @@ const slug =  ({ title, desc, price, time, questions, id , sess}) => {
               )}
             </li>
 })}
+<p className='text-xl'>.......</p>
       <p className='text-2xl'>Buy or subscribe to access mock paper...</p>
       <button onClick={()=>{initp()}} type="button" class="m-6 p-6 text-lg text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg  px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Buy for ₹{price} only <span style={{'text-decoration-thickness': '0.25rem'}} className='font-semibold line-through decoration-black'>₹{price + price/10}</span></button>
       <button type="button" class="m-6 p-6 text-lg text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg  px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Subscribe to our app</button>
@@ -152,7 +153,7 @@ const slug =  ({ title, desc, price, time, questions, id , sess}) => {
         </div>
       </div>
     </div>
-    </>
+    </div>
   );
 }
 export default slug

@@ -1,14 +1,11 @@
-// pages/exams.js
-
+import React from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
-
 export default function Mock() {
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
 
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-semibold text-gray-800 mb-4">Available Mock Papers for exams</h1>
+        <h1 className="text-3xl font-semibold text-white mb-4">Available Mock Papers for exams</h1>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <ExamCard
             name="REET"
@@ -34,10 +31,10 @@ export default function Mock() {
 
 // Component for rendering each exam card
 const ExamCard = ({ name, description, syllabus }) => (
-  <li className="bg-white rounded-lg shadow-md overflow-hidden">
+  <li className="bg-gray-800 rounded-lg shadow-md overflow-hidden border-gray-200">
     <div className="p-6 h-64">
-      <h2 className="text-xl font-semibold text-gray-800 mb-2">{name}</h2>
-      <p className="text-gray-600 mb-4">{description}</p>
+      <h2 className="text-xl font-semibold text-white mb-2">{name}</h2>
+      <p className="text-gray-100 mb-4">{description}</p>
     </div>
     <div className="bg-blue-500 text-white text-center py-3">
       <Link href={"/mocks/list?ex=" + name} legacyBehavior>

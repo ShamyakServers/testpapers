@@ -65,7 +65,7 @@ const Signup = () => {
           <div> 
             <img
               className="mx-auto h-12 w-auto"
-              src="/logo.webp"
+              src="/images/logo-whitetext-transparent.png"
               alt="Workflow"
             />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-blue-900">Signup for an account</h2>

@@ -28,6 +28,7 @@ export const authOptions = {
             body:JSON.stringify(credentials)
           })
           let json = await req1.json()
+          console.log(json)
           if(req1.status == 406){
             return {success:false, error:"Please try to login with correct credentials"}
           }

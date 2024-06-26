@@ -24,9 +24,9 @@ async function handler(req, res) {
     })
     await newreq.save()
     let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        secure: true,
-        port: 465,
+        service: "hotmail",
+        // secure: true,
+        // port: 465,
         auth: {
           user: process.env.NEXT_PUBLIC_EMAIL,
           pass: process.env.PASS,
@@ -78,9 +78,9 @@ async function handler(req, res) {
             })
             await newreq.save()
             let transporter = nodemailer.createTransport({
-                host: "smtp.gmail.com",
-                secure: true,
-                port: 465,
+                service: "hotmail",
+                // secure: true,
+                // port: 465,
                 auth: {
                   user: process.env.NEXT_PUBLIC_EMAIL,
                   pass: process.env.PASS
